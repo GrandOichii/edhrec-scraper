@@ -105,7 +105,18 @@ func main() {
 			fmt.Printf("No commander with name %s\n", cname)
 			return
 		}
-		recc, err := cards[0].GetReccomendations(synergyThresh)
+		ci := 0
+		for {
+			if cards[ci].IsCreature() && cards[ci].IsLegendary() {
+				break
+			}
+			ci++
+			if ci == len(cards) {
+				fmt.Printf("No commander with name %s\n", cname)
+				return
+			}
+		}
+		recc, err := cards[ci].GetReccomendations(synergyThresh)
 		checkErr(err)
 		result[commanderName] = recc
 		fmt.Printf("Cards for %s loaded!\n", commanderName)
