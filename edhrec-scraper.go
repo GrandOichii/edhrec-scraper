@@ -81,10 +81,12 @@ func main() {
 		log.SetOutput(ioutil.Discard)
 	}
 	if namesPath == "" {
-		checkErr(flag.ErrHelp)
+		flag.PrintDefaults()
+		return
 	}
 	if outPath == "" {
-		checkErr(flag.ErrHelp)
+		flag.PrintDefaults()
+		return
 	}
 	// read the commander names
 	cnames, err := readCommanderNames(namesPath)
@@ -96,10 +98,17 @@ func main() {
 			continue
 		}
 		cards, err := mtgsdk.GetCards(map[string]string{mtgsdk.CardNameKey: cname})
+		commanderName := cards[0].Name
+		fmt.Printf("Getting reccomendations for %s with synergy %d...\n", commanderName, synergyThresh)
 		checkErr(err)
+		if len(cards) == 0 {
+			fmt.Printf("No commander with name %s\n", cname)
+			return
+		}
 		recc, err := cards[0].GetReccomendations(synergyThresh)
 		checkErr(err)
-		result[cname] = recc
+		result[commanderName] = recc
+		fmt.Printf("Cards for %s loaded!\n", commanderName)
 	}
 	err = writeToFile(result, outPath)
 	checkErr(err)

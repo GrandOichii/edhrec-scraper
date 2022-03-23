@@ -1,2 +1,2 @@
 all:
-	@go run . -src=commanders.txt -out=out.json -synergy=20
+	@go run . -log -src=commanders.txt -out=out.json -synergy=20
