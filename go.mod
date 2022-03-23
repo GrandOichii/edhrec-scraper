@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/GrandOichii/colorwrapper v0.0.0-20220203103117-b874d1231741
-	github.com/GrandOichii/mtgsdk v1.1.1
+	github.com/GrandOichii/mtgsdk v1.1.2
 )
 
 require (
